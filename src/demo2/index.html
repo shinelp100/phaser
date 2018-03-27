@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>phaser demo1</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <!--<script src="/src/assets/phaser.min.js"></script>-->
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.3.0/dist/phaser.min.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<body>
+<div id="scene"></div>
+<script>
+    var backgroundSceneConfig = {
+        key: 'background',
+        active: true,
+        preload: preload,
+        create: create,
+        update: update,
+        files: [
+//            {type: 'spritesheet', key: 'mummy', url: '/src/assets/player_01.png'}
+        ]
+    };
+    var gameConfig = {
+        type: Phaser.AUTO,
+        parent: 'scene',
+        width: 800,
+        height: 600,
+        scene: backgroundSceneConfig
+    };
+    var game = new Phaser.Game(gameConfig);
+
+    function preload() {
+        console.log('preload');
+        this.load.spritesheet('mummy', '/src/assets/player.png', { frameWidth: 110, frameHeight: 151 });
+        this.load.spritesheet('running', '/src/assets/running.jpg', { frameWidth: 49.375, frameHeight: 64 });
+    }
+
+    function create() {
+        walk(this);
+        runningLeft(this);
+    }
+
+    function update() {
+        console.log('update');
+    }
+
+    function walk(that) {
+        var config = {
+            key: 'walk',
+            frames: that.anims.generateFrameNumbers('mummy', { start: 0, end: 26 }),//在没有设置动画的起始位置动画会有闪动的过程
+            framerate: 26,
+            yoyo: true,
+            repeat: -1
+        };
+        that.anims.create(config);
+
+        var sprite = that.add.sprite(400, 300, 'mummy');
+
+        sprite.anims.load('walk');
+
+        sprite.anims.play('walk');
+    }
+    function runningRight(that) {
+        var config = {
+            key: 'runningRight',
+            frames: that.anims.generateFrameNumbers('running', { start: 0, end: 7 }),
+            framerate: 15,
+            yoyo: true,
+            repeat: -1
+        };
+        that.anims.create(config);
+
+        var sprite = that.add.sprite(200, 300, 'running');
+
+        sprite.anims.load('runningRight');
+
+        sprite.anims.play('runningRight');
+    }
+    function runningLeft(that) {
+        var config = {
+            key: 'runningLeft',
+            frames: that.anims.generateFrameNumbers('running', { start: 8, end: 16 }),
+            framerate: 15,
+            yoyo: true,//
+            repeat: -1
+        };
+        that.anims.create(config);
+
+        var sprite = that.add.sprite(200, 300, 'running');
+
+        sprite.anims.load('runningLeft');
+
+        sprite.anims.play('runningLeft');
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>phaser demo1</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <!--<script src="/src/assets/phaser.min.js"></script>-->
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.3.0/dist/phaser.min.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<body>
+<div id="scene"></div>
+<script>
+    var backgroundSceneConfig = {
+        key: 'background',
+        active: true,
+        preload: preloadBackground,
+        create: createBackground,
+        render: renderBackground,
+        files: [
+            {type: 'image', key: 'star', url: '/src/assets/star.png'}
+        ]
+    };
+    var modalSceneConfig = {
+        key: 'modal',
+        active: true,
+        renderToTexture: true,
+        x: 64,
+        y: 64,
+        width: 320,
+        height: 200,
+        preload: preloadModal,
+        create: createModal,
+        render: renderModal,
+        files: [
+            {type: 'image', key: 'monkey', url: '/src/assets/monkey.png'}
+        ]
+    };
+
+    var gameConfig = {
+        type: Phaser.AUTO,
+        parent: 'scene',
+        width: 800,
+        height: 600,
+        scene: [backgroundSceneConfig, modalSceneConfig]
+    };
+
+    var game = new Phaser.Game(gameConfig);
+
+    function preloadBackground() {
+        console.log('preloadBackground');
+    }
+
+    function preloadModal() {
+        console.log('preloadModal');
+    }
+
+    function createBackground() {
+        console.log('createBackground');
+//        this.add.image(50, 20, 'monkey');
+        this.add.image(0, 0, 'star');
+    }
+
+    function renderBackground() {
+        console.log('renderBackground');
+    }
+
+    function createModal() {
+        console.log('createModal');
+        this.add.image(50, 20, 'monkey');
+//        this.add.image(10, 20, 'star');
+    }
+
+    function renderModal() {
+        console.log('renderModal');
+    }
+
+
+</script>
+</body>
+</html>
