@@ -6,8 +6,8 @@ phaser 动画管理器
 phaser 动画管理器 --> demo2
 ```
 
-####效果图
+#### 效果图
 
 ![效果](../assets/1.gif)
 
-[phaser animation-manager](https://phaser.io/phaser3/api/animation-manager)
+[phaser animation-manager原文](https://phaser.io/phaser3/api/animation-manager)
