@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>phaser demo5</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <!--<script src="/src/assets/phaser.min.js"></script>-->
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.3.0/dist/phaser.min.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+</style>
+<body style="height: 100vh">
+<div id="scene" style="height: 100vh"></div>
+<script>
+    var sizeW = document.body.offsetWidth;
+    var sizeH = document.body.offsetHeight;
+    var config = {
+        type: Phaser.AUTO,
+        parent: 'scene',
+        width: sizeW,
+        height: sizeH,
+        resolution: 1,
+        active: true,
+        scene: {
+            preload: preload,
+            create: create
+        }
+    };
+
+    var game = new Phaser.Game(config);
+
+    function preload() {
+
+    }
+
+    function create() {
+//  Here is an Event ...
+        var playerEvent = new Phaser.EventEmitter('shoot');
+
+//  We'll use the States own EventDispatcher to listen for, and dispatch the events
+        console.log(playerEvent);
+//  And here is listener
+        this.events.on('shoot', handler);
+
+//  Dispatch the event
+        this.events.dispatch(playerEvent);
+
+        function handler(event) {
+
+            console.log('Event Received by Handler:', event);
+
+        }
+    }
+</script>
+</body>
+</html>

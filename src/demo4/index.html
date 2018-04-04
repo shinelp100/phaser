@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>phaser demo1</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <!--<script src="/src/assets/phaser.min.js"></script>-->
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.3.0/dist/phaser.min.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<body>
+<div id="scene"></div>
+<script>
+    var config = {
+        type: Phaser.AUTO,
+        parent: 'scene',
+        width: 800,
+        height: 600,
+        resolution: 1,
+        active: true,
+        scene: {
+            preload: preload,
+            create: create
+        },
+        callbacks: {
+            preBoot: function () {
+                console.log('I get called before all of the Game systems are created, but after Device is available')
+            },
+            postBoot: function () {
+                console.log('I get called after all of the Game systems are running, immediately before raf starts')
+            }
+        }
+    };
+
+    var game = new Phaser.Game(config);
+
+    function preload() {
+
+        this.load.json('jsonData', '/src/assets/test.json');
+
+    }
+
+    /*从cache中拿数据*/
+    function create() {
+        console.log(this.cache);
+//        this.cache.json.has('jsonData');
+//        this.cache.json.remove('jsonData');
+//        this.cache.json.add('jsonData');
+        console.log(this.cache.json.get('jsonData'));
+
+    }
+</script>
+</body>
+</html>
