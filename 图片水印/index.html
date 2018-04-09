@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>图片水印</title>
+</head>
+<body>
+<input id="ctn" type="text" value="shinelp100的水印" placeholder="输入要想要输入的文字">
+<button onclick="changeWatermark();">确定</button>
+<p>图片显示区域</p>
+<canvas id="myCanvas" width="750" height="440">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+<script type="text/javascript">
+    window.onload = function () {
+        changeWatermark();
+    };
+
+    function changeWatermark() {
+        var ctn = document.getElementById("ctn").value;
+        var a = new watermark(ctn);
+        a.addWatermark();
+    }
+
+    function watermark(ctn) {
+        this.ctn = ctn;
+    }
+    watermark.prototype.addWatermark = function () {
+        var img = new Image();
+        img.src = '1.png';
+        var that = this;
+        img.onload = function () {
+            var canvas = document.getElementById("myCanvas");
+            var hx = canvas.height-20;
+            var wx = canvas.width-20;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            ctx.font = "40px microsoft yahei";
+            ctx.textAlign="right";
+            var gradient=ctx.createLinearGradient(0,0,canvas.width,0);
+            gradient.addColorStop("0","blue");
+            gradient.addColorStop("0.5","yellow");
+            gradient.addColorStop("1.0","red");
+            ctx.fillStyle=gradient;
+//            ctx.fillStyle = "rgba(255,255,255,0.8)";
+            ctx.fillText(that.ctn,wx,hx,wx);
+        }
+    }
+</script>
+</body>
+</html>

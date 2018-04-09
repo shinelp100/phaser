@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>图片水印</title>
+</head>
+<body>
+<input id="ctn" type="text" value="shinelp100的水印" placeholder="输入要想要输入的文字">
+<button onclick="changeWatermark();">确定</button>
+<p>图片显示区域</p>
+<div id="picContainer">
+    <canvas id="myCanvas" width="750" height="440">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+</div>
+<script type="text/javascript">
+    window.onload = function () {
+        changeWatermark();
+    };
+
+    function changeWatermark() {
+        var ctn = document.getElementById("ctn").value;
+        var canvas = document.getElementById("myCanvas");
+        var a = new watermark(ctn,canvas);
+        a.addWatermark(function () {
+            a.convertCanvasToImage()
+        });
+    }
+
+    /*水印方法*/
+    function watermark(ctn,canvas) {
+        this.ctn = ctn || "";
+        this.canvas = canvas || null;
+    }
+
+    /*添加水印操作*/
+    watermark.prototype.addWatermark = function (callback) {
+        var img = new Image();
+        img.src = '1.png';
+        var that = this;
+        img.onload = function () {
+            var hx = that.canvas.height-20;
+            var wx = that.canvas.width-20;
+            var ctx = that.canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            ctx.font = "40px microsoft yahei";
+            ctx.textAlign="right";
+            var gradient=ctx.createLinearGradient(0,0,that.canvas.width,0);
+            gradient.addColorStop("0","blue");
+            gradient.addColorStop("0.5","yellow");
+            gradient.addColorStop("1.0","red");
+            ctx.fillStyle=gradient;
+            ctx.fillText(that.ctn,wx,hx,wx);
+            if(typeof callback === "function"){
+                callback();
+            }
+        }
+        return this;
+    }
+
+    /*canvas水印转化为图片*/
+    watermark.prototype.convertCanvasToImage = function() {
+        var container = document.getElementById('picContainer');
+        var img = document.createElement('img');
+        img.src = this.canvas.toDataURL("image/png");
+        this.canvas.style.display = "none";
+        var deleteImg = document.querySelectorAll("#picContainer img");
+        if(!!deleteImg){
+            deleteImg.forEach(function (t) {
+                container.removeChild(t)
+            })
+        }
+        container.appendChild(img);
+        return this;
+    }
+</script>
+</body>
+</html>
